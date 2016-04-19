@@ -1,0 +1,86 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polygon</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map = {};
+      function initMap() {
+
+        var srctLatLng = {lat: 24.886, lng: -70.268};
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 5,
+          center: srctLatLng,
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+
+
+          //drawMarker(srctLatLng);
+          drawPath(srctLatLng, {lat: 18.466, lng: -66.118});
+          drawPath(srctLatLng, {lat: 28.466, lng: -76.118});
+          drawPath(srctLatLng, {lat: 38.466, lng: -46.118});
+          drawPath(srctLatLng, {lat: 28.466, lng: -76.118});
+          drawPath(srctLatLng, {lat: 18.466, lng: -16.118});
+          drawPath(srctLatLng, {lat: 28.466, lng: -26.118});
+          drawPath(srctLatLng, {lat: 38.466, lng: -36.118});
+          drawPath(srctLatLng, {lat: 48.466, lng: -46.118});
+          drawPath(srctLatLng, {lat: 58.466, lng: -56.118});
+          drawPath(srctLatLng, {lat: 68.466, lng: -66.118});
+          drawPath(srctLatLng, {lat: 78.466, lng: -76.118});
+        }
+
+        function drawMarker(myLatLng) {
+          var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Hello World!'
+          });
+        }
+
+        function drawPath(srctLatLng, destLatLng) {
+          var path = [ srctLatLng, destLatLng ];
+          var lineSymbol = { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW };
+          drawMarker(destLatLng);
+
+          var line = new google.maps.Polyline({
+            path: path,
+            strokeColor: '#0000FF',
+            strokeWeight: 2,
+            icons: [{
+              icon: lineSymbol,
+              offset: '100%'
+            }],
+            map: map
+          });
+          animateCircle(line);
+
+        }
+
+        function animateCircle(line) {
+          var count = 0;
+          window.setInterval(function() {
+            count = (count + 1) % 200;
+            var icons = line.get('icons');
+            icons[0].offset = (count / 2) + '%';
+            line.set('icons', icons);
+        }, 20);
+      }
+
+      </script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZfHRnq7tigC-COeQRmoa9Cxr0vbrK6xw&callback=initMap"></script>
+    </body>
+    </html>
